@@ -9,11 +9,18 @@ using CityApp_ANET.DAL.App.EF;
 using CityApp_ANET.Models;
 using CityApp_ANET.Services.UserService;
 using CityApp_ANET.DTOs;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using CityApp_ANET.DTOs.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CityApp_ANET.ApiControllers
 {
     [Route("api/Users")]
     [ApiController]
+    [Authorize(Roles = "ROLE_ADMIN")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -21,6 +28,36 @@ namespace CityApp_ANET.ApiControllers
         public UsersController(IUserService userService)
         {
             _userService = userService;
+        }
+
+        // POST: api/Users/register
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<ActionResult<JWTResponseDTO>> RegisterUser(AuthenticationDTO registerDTO)
+        {
+            User? createdUser = await _userService.RegisterUser(registerDTO);
+
+            if (createdUser == null)
+            {
+                return BadRequest("User already exists");
+            }
+
+            return Ok(_userService.CreateJWTToken(createdUser));
+        }
+
+        // POST: api/Users/login
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<ActionResult<JWTResponseDTO>> LoginUser(AuthenticationDTO loginDTO)
+        {
+            User? user = await _userService.GetUserByUsername(loginDTO.Username);
+
+            if (user == null || !_userService.VerifyPassword(loginDTO.Password, user.PasswordHash))
+            {
+                return BadRequest("Login failed");
+            }
+
+            return Ok(_userService.CreateJWTToken(user));
         }
 
         // GET: api/Users
@@ -45,7 +82,7 @@ namespace CityApp_ANET.ApiControllers
 
         // PUT: api/Users/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User requestUser)
+        public async Task<IActionResult> PutUser(int id, UserDTO requestUser)
         {
             if (id != requestUser.Id)
             {
@@ -62,14 +99,6 @@ namespace CityApp_ANET.ApiControllers
             {
                 return NoContent();
             }
-        }
-
-        // POST: api/Users
-        [HttpPost]
-        public async Task<ActionResult<UserDTO>> PostUser(User requestUser)
-        {
-            UserDTO user = await _userService.PostUser(requestUser);
-            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
         // DELETE: api/Users/{id}
