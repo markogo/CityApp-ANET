@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CityApp_ANET.Services.CityService
 {
-	public class CityService : ICityService
-	{
+    public class CityService : ICityService
+    {
         private readonly AppDbContext _context;
 
-		public CityService(AppDbContext context)
-		{
+        public CityService(AppDbContext context)
+        {
             this._context = context;
-		}
+        }
 
         public async Task<List<CityDTO>> GetCities(int pageNumber, int pageSize)
         {
@@ -42,13 +42,13 @@ namespace CityApp_ANET.Services.CityService
 
         public async Task<CityDTO?> GetCity(int id)
         {
-            var city = await _context.Cities.FindAsync(id);
+            City? city = await _context.Cities.FindAsync(id);
             return city == null ? null : DomainToDTO(city);
         }
 
-        public async Task<bool> PutCity(int id, City requestCity)
+        public async Task<bool> PutCity(int id, CityDTO requestCity)
         {
-            var city = await _context.Cities.FindAsync(id);
+            City? city = await _context.Cities.FindAsync(id);
 
             if (city == null)
             {
@@ -63,16 +63,24 @@ namespace CityApp_ANET.Services.CityService
             return true;
         }
 
-        public async Task<CityDTO> PostCity(City requestCity)
+        public async Task<CityDTO> PostCity(CityDTO requestCity)
         {
-            _context.Cities.Add(requestCity);
+            City city = new City
+            {
+                Name = requestCity.Name,
+                Photo = requestCity.Photo
+            };
+
+            _context.Cities.Add(city);
+
             await _context.SaveChangesAsync();
-            return DomainToDTO(requestCity);
+
+            return DomainToDTO(city);
         }
 
         public async Task<int?> DeleteCity(int id)
         {
-            var city = await _context.Cities.FindAsync(id);
+            City? city = await _context.Cities.FindAsync(id);
 
             if (city == null)
             {

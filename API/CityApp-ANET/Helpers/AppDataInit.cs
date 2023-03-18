@@ -8,8 +8,8 @@ using CsvHelper.Configuration;
 
 namespace CityApp_ANET.Helpers
 {
-	public class AppDataInit
-	{
+    public class AppDataInit
+    {
         public static void SeedData(AppDbContext context, ILogger logger)
         {
             SeedCities(context, logger);
@@ -31,18 +31,27 @@ namespace CityApp_ANET.Helpers
                 new User()
                 {
                     Id = 1,
-                    Name = "Default user",
-                    Role = "ROLE_DEFAULT"
+                    Username = "Default_user",
+                    PasswordHash = "$2a$11$WjPM0nE0gyxTWCSDYwwIjuseCR4SU0qKhtywgj50dMgsKlshqpmHu",
+                    Role = Role.ROLE_USER
                 },
                 new User()
                 {
                     Id = 2,
-                    Name = "Admin user",
-                    Role = "ROLE_ALLOW_EDIT"
+                    Username = "Editor_user",
+                    PasswordHash = "$2a$11$Xddpnf4rUP5JEei2IAzjveJ1CaVVXRQCVJsj.iJ2k0mHC4vJEAHlO",
+                    Role = Role.ROLE_ALLOW_EDIT
+                },
+                new User()
+                {
+                    Id = 3,
+                    Username = "Admin_user",
+                    PasswordHash = "$2a$11$FvYMiIrWJWZjZjMTQKPr3uqWtMCx6KITd0f8fbeT0BRar4iZsUXA2",
+                    Role = Role.ROLE_ADMIN
                 }
             };
 
-            foreach (User user in users)
+            foreach (User user in users.Reverse())
             {
                 if (!context.Users.Any(u => u.Id == user.Id))
                 {
@@ -89,4 +98,3 @@ namespace CityApp_ANET.Helpers
         }
     }
 }
-

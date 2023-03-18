@@ -10,11 +10,14 @@ using CityApp_ANET.Models;
 using CityApp_ANET.Services.CityService;
 using System.Drawing.Printing;
 using CityApp_ANET.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace CityApp_ANET.ApiControllers
 {
     [Route("api/Cities")]
     [ApiController]
+    [Authorize]
     public class CitiesController : ControllerBase
     {
         private readonly ICityService _cityService;
@@ -54,8 +57,9 @@ namespace CityApp_ANET.ApiControllers
         }
 
         // PUT: api/Cities/{id}
+        [Authorize(Roles = "ROLE_ALLOW_EDIT, ROLE_ADMIN")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCity(int id, City requestCity)
+        public async Task<IActionResult> PutCity(int id, CityDTO requestCity)
         {
             if (id != requestCity.Id)
             {
@@ -76,12 +80,12 @@ namespace CityApp_ANET.ApiControllers
 
         // POST: api/Cities
         [HttpPost]
-        public async Task<ActionResult<CityDTO>> PostCity(City requestCity)
+        public async Task<ActionResult<CityDTO>> PostCity(CityDTO requestCity)
         {
             CityDTO city = await _cityService.PostCity(requestCity);
             return CreatedAtAction(nameof(GetCity), new { id = city.Id }, city);
         }
-        
+
         // DELETE: api/Cities/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCity(int id)

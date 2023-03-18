@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>CityApp_ANET</RootNamespace>
+    <UserSecretsId>f500a4ce-f682-4671-9bf4-9e9f092a92ab</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
@@ -21,6 +22,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="7.0.4" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +37,7 @@
     <None Remove="Services\" />
     <None Remove="Services\CityService\" />
     <None Remove="Services\UserService\" />
+    <None Remove="DTOs\Authentication\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
@@ -45,5 +50,6 @@
     <Folder Include="Services\" />
     <Folder Include="Services\CityService\" />
     <Folder Include="Services\UserService\" />
+    <Folder Include="DTOs\Authentication\" />
   </ItemGroup>
 </Project>
