@@ -49,7 +49,6 @@ namespace CityApp_ANET.Services.UserService
             }
 
             user.Username = requestUser.Username;
-            user.PasswordHash = requestUser.PasswordHash;
 
             await _context.SaveChangesAsync();
 
@@ -134,7 +133,6 @@ namespace CityApp_ANET.Services.UserService
             {
                 Id = user.Id,
                 Username = user.Username,
-                PasswordHash = user.PasswordHash,
                 Role = user.Role
             };
         }

@@ -9,8 +9,6 @@ namespace CityApp_ANET.DTOs
 
         public string Username { get; set; } = default!;
 
-        public string PasswordHash { get; set; } = default!;
-
         public Role Role { get; set; } = default!;
     }
 }
