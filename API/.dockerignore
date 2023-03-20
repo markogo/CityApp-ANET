@@ -8,6 +8,7 @@ docker-compose*
 .env
 */bin
 */obj
+*/out
 README.md
 LICENSE
 .vscode
