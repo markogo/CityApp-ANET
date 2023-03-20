@@ -49,5 +49,4 @@ services:
 
 networks:
   # front-tier: {}
-  back-tier:
-    driver: local
+  back-tier: { }
