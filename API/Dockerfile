@@ -22,4 +22,4 @@ WORKDIR /API
 COPY --from=build-env /API/CityApp-ANET .
 COPY --from=build-env /API/out .
 
-ENTRYPOINT ["dotnet", "CityApp-ANET.dll", "--urls", "http://localhost:5083"]
+ENTRYPOINT ["dotnet", "CityApp-ANET.dll", "--urls", "http://0.0.0.0:5083"]
