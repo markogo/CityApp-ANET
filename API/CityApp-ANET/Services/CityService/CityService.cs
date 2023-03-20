@@ -20,12 +20,13 @@ namespace CityApp_ANET.Services.CityService
             if (pageNumber != 0 && pageSize != 0)
             {
                 return await _context.Cities
+                    .OrderBy(c => c.Id)
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize)
-                    .Select(c => DomainToDTO(c))
+                    .Select(c => ICityService.DomainToDTO(c))
                     .ToListAsync();
             }
-            return await _context.Cities.Select(c => DomainToDTO(c)).ToListAsync();
+            return await _context.Cities.Select(c => ICityService.DomainToDTO(c)).ToListAsync();
         }
 
         public async Task<List<CityDTO>> SearchCities(string name)
@@ -37,13 +38,13 @@ namespace CityApp_ANET.Services.CityService
                 query = query.Where(c => c.Name.ToLower().Contains(name.Trim().ToLower()));
             }
 
-            return await query.Select(c => DomainToDTO(c)).ToListAsync();
+            return await query.Select(c => ICityService.DomainToDTO(c)).ToListAsync();
         }
 
         public async Task<CityDTO?> GetCity(int id)
         {
             City? city = await _context.Cities.FindAsync(id);
-            return city == null ? null : DomainToDTO(city);
+            return city == null ? null : ICityService.DomainToDTO(city);
         }
 
         public async Task<bool> PutCity(int id, CityDTO requestCity)
@@ -75,7 +76,7 @@ namespace CityApp_ANET.Services.CityService
 
             await _context.SaveChangesAsync();
 
-            return DomainToDTO(city);
+            return ICityService.DomainToDTO(city);
         }
 
         public async Task<int?> DeleteCity(int id)
@@ -93,16 +94,5 @@ namespace CityApp_ANET.Services.CityService
 
             return id;
         }
-
-        public CityDTO DomainToDTO(City city)
-        {
-            return new CityDTO
-            {
-                Id = city.Id,
-                Name = city.Name,
-                Photo = city.Photo
-            };
-        }
     }
 }
-

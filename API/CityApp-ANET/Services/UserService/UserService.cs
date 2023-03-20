@@ -24,13 +24,13 @@ namespace CityApp_ANET.Services.UserService
 
         public async Task<List<UserDTO>> GetUsers()
         {
-            return await _context.Users.Select(u => DomainToDTO(u)).ToListAsync();
+            return await _context.Users.Select(u => IUserService.DomainToDTO(u)).ToListAsync();
         }
 
         public async Task<UserDTO?> GetUser(int id)
         {
             User? user = await _context.Users.FindAsync(id);
-            return user == null ? null : DomainToDTO(user);
+            return user == null ? null : IUserService.DomainToDTO(user);
         }
 
         public async Task<User?> GetUserByUsername(string username)
@@ -124,16 +124,6 @@ namespace CityApp_ANET.Services.UserService
             {
                 Username = user.Username,
                 Jwt = jwt
-            };
-        }
-
-        public UserDTO DomainToDTO(User user)
-        {
-            return new UserDTO
-            {
-                Id = user.Id,
-                Username = user.Username,
-                Role = user.Role
             };
         }
     }
