@@ -1,0 +1,52 @@
+services:
+
+  database:
+    image: postgres:15.2-alpine
+    container_name: database
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pguser
+      POSTGRES_DB: pgdb
+    networks:
+      - back-tier
+
+  backend:
+    build:
+      context: ./API
+      dockerfile: Dockerfile
+    container_name: backend
+    depends_on:
+      - database
+    ports:
+      # - 7299:7299
+      - 5083:5083
+    networks:
+      - back-tier
+
+#  frontend:
+#    build:
+#      context: ./app
+#      dockerfile: Dockerfile
+#    container_name: frontent
+#    ports:
+#      - '9000:80'
+#    environment:
+#      PORT:
+#      NODE_ENV: local
+
+
+#yagni?
+
+#configs:
+#  httpd-config:
+#    external: true
+
+#secrets:
+#  server-certificate:
+#    external:true
+
+networks:
+  # front-tier: {}
+  back-tier: { }

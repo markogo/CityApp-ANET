@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Text.Json.Serialization;
 using CityApp_ANET.DAL.App.EF;
@@ -19,7 +19,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("CityApp"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -104,4 +104,3 @@ static void SetupAppData(IApplicationBuilder app, IWebHostEnvironment env, IConf
 
     AppDataInit.SeedData(context, logger);
 }
-
