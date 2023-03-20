@@ -18,6 +18,14 @@ namespace CityApp_ANET.Services.CityService
 
         Task<int?> DeleteCity(int id);
 
-        CityDTO DomainToDTO(City city);
+        static CityDTO DomainToDTO(City city)
+        {
+            return new CityDTO
+            {
+                Id = city.Id,
+                Name = city.Name,
+                Photo = city.Photo
+            };
+        }
     }
 }

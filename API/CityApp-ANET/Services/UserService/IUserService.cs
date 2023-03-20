@@ -23,7 +23,15 @@ namespace CityApp_ANET.Services.UserService
 
         bool VerifyPassword(string password, string hash);
 
-        UserDTO DomainToDTO(User user);
+        static UserDTO DomainToDTO(User user)
+        {
+            return new UserDTO
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Role = user.Role
+            };
+        }
     }
 }
 
