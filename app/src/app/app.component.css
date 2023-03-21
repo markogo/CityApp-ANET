@@ -1,0 +1,6 @@
+.appContainer {
+  margin: auto;
+  width: 50%;
+  max-width: 500px;
+  min-width: 250px;
+}
