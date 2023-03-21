@@ -30,8 +30,6 @@ A simple FE application for showing different cities and their pictues.
 - Run `ng build`
 - Copy the created `dist/` folder's content to the webserver of your choosing
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
-
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
