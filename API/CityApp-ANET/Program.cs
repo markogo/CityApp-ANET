@@ -1,9 +1,7 @@
-using System;
 using System.Text;
 using System.Text.Json.Serialization;
 using CityApp_ANET.DAL.App.EF;
 using CityApp_ANET.Helpers;
-using CityApp_ANET.Models;
 using CityApp_ANET.Services.CityService;
 using CityApp_ANET.Services.UserService;
 using Microsoft.EntityFrameworkCore;
@@ -43,7 +41,7 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
         ValidateAudience = false,
         ValidateIssuer = false,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                builder.Configuration.GetSection("AppSettings:TokenKey").Value!))
+            builder.Configuration.GetSection("AppSettings:TokenKey").Value!))
     };
 });
 
@@ -89,18 +87,13 @@ static void SetupAppData(IApplicationBuilder app, IWebHostEnvironment env, IConf
         .CreateScope();
 
     using var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
+    context?.Database.Migrate();
 
     var logger = serviceScope.ServiceProvider.GetService<ILogger<Program>>();
 
-    if (context == null)
-    {
-        throw new ApplicationException("Problem in services. Can't initialize ApplicationDbContext");
-    }
+    if (context == null) throw new ApplicationException("Problem in services. Can't initialize ApplicationDbContext");
 
-    if (logger == null)
-    {
-        throw new ApplicationException("Problem in services. Can't initialize logger");
-    }
+    if (logger == null) throw new ApplicationException("Problem in services. Can't initialize logger");
 
     AppDataInit.SeedData(context, logger);
 }

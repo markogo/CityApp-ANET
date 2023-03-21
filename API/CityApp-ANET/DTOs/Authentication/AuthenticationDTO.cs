@@ -1,10 +1,8 @@
-﻿using System;
-namespace CityApp_ANET.DTOs.Authentication
-{
-    public class AuthenticationDTO
-    {
-        public string Username { get; set; } = default!;
+﻿namespace CityApp_ANET.DTOs.Authentication;
 
-        public string Password { get; set; } = default!;
-    }
+public class AuthenticationDTO
+{
+    public string Username { get; set; } = default!;
+
+    public string Password { get; set; } = default!;
 }

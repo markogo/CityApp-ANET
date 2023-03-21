@@ -9,9 +9,6 @@ COPY . .
 # Build and publish
 RUN dotnet publish -c Release -o out
 
-# Run migrations
-# RUN dotnet ef database update
-
 # Create https cert
 # RUN dotnet dev-certs https
 
