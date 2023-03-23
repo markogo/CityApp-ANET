@@ -29,18 +29,18 @@ namespace CityApp_ANET.ApiControllers
 
         // GET: api/Cities
         [HttpGet]
-        public async Task<ActionResult<List<CityDTO>>> GetCities(
+        public async Task<ActionResult<GetCitiesDTO>> GetCities(
             [FromQuery] int pageNumber, [FromQuery] int pageSize)
         {
             return Ok(await _cityService.GetCities(pageNumber, pageSize));
         }
 
         // GET: api/Cities/search
-        [HttpGet("/search")]
-        public async Task<ActionResult<List<CityDTO>>> SearchCities(
-            [FromQuery] string name)
+        [HttpGet("search")]
+        public async Task<ActionResult<GetCitiesDTO>> SearchCities(
+            [FromQuery] string name, [FromQuery] int pageNumber, [FromQuery] int pageSize)
         {
-            return Ok(await _cityService.SearchCities(name));
+            return Ok(await _cityService.SearchCities(name, pageNumber, pageSize));
         }
 
         // GET: api/Cities/{id}

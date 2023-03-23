@@ -1,6 +1,7 @@
-.appContainer {
-  margin: auto;
-  width: 50%;
-  max-width: 500px;
-  min-width: 250px;
+.spacer {
+  flex: 1 1 auto;
+}
+
+.auth-container {
+  display: flex;
 }

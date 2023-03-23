@@ -1,1 +1,62 @@
-<p>cities-list works!</p>
+<app-wrapper>
+  <div class="search-container">
+    <form [formGroup]="searchForm" (ngSubmit)="searchCities()">
+      <mat-form-field class="form-field" appearance="outline">
+        <input
+          placeholder="Search for a city"
+          type="text"
+          matInput
+          formControlName="name"
+        />
+      </mat-form-field>
+      <div class="button-container">
+        <button type="submit" mat-raised-button color="primary">Search</button>
+        <button (click)="resetSearch()" mat-raised-button color="accent">
+          Reset
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <mat-paginator
+    [length]="cityData?.totalItems"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPaginateChange($event)"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+
+  <div class="cards">
+    <mat-card class="card" *ngFor="let city of cityData?.cities">
+      <div style="display: flex; justify-content: center">
+        <img
+          mat-card-image
+          [src]="city.photo"
+          alt="Photo of {{ city.name }}"
+          onerror="this.src='assets/images/not-found-image.jpeg'"
+        />
+      </div>
+      <mat-card-content>
+        <mat-card-header style="justify-content: center">
+          <mat-card-title>{{ city.name }}</mat-card-title>
+        </mat-card-header>
+      </mat-card-content>
+      <mat-card-actions *ngIf="canEditCity" style="justify-content: end">
+        <button mat-button (click)="editCity(city)">
+          <mat-icon>mode_edit</mat-icon>
+          EDIT
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <mat-paginator
+    [length]="cityData?.totalItems"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPaginateChange($event)"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</app-wrapper>

@@ -123,7 +123,8 @@ namespace CityApp_ANET.Services.UserService
             return new JWTResponseDTO
             {
                 Username = user.Username,
-                Jwt = jwt
+                Jwt = jwt,
+                Role = user.Role
             };
         }
     }
