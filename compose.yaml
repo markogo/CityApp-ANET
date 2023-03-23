@@ -6,9 +6,9 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: pguser
-      POSTGRES_PASSWORD: pguser
-      POSTGRES_DB: pgdb
+      POSTGRES_USER: cityapp
+      POSTGRES_PASSWORD: cityapp
+      POSTGRES_DB: citybase
     networks:
       - back-tier
 
@@ -20,33 +20,28 @@ services:
     depends_on:
       - database
     ports:
-      # - 7299:7299
       - 5083:5083
+    environment:
+      - ConnectionString=Server=database;Port=5432;Database=citybase;User Id=cityapp;Password=cityapp;
     networks:
       - back-tier
+      - front-tier
 
-#  frontend:
-#    build:
-#      context: ./app
-#      dockerfile: Dockerfile
-#    container_name: frontent
-#    ports:
-#      - '9000:80'
-#    environment:
-#      PORT:
-#      NODE_ENV: local
-
-
-#yagni?
-
-#configs:
-#  httpd-config:
-#    external: true
-
-#secrets:
-#  server-certificate:
-#    external:true
+  frontend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: frontent
+    depends_on:
+      - backend
+    ports:
+      - 8080:80
+    environment:
+      NODE_ENV: local
+      apiUrl: http://localhost:5083/api
+    networks:
+      - front-tier
 
 networks:
-  # front-tier: {}
-  back-tier: { }
+  front-tier: {}
+  back-tier: {}

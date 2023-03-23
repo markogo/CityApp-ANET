@@ -17,7 +17,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(Environment.GetEnvironmentVariable("ConnectionString")));
 
 builder.Services.AddEndpointsApiExplorer();
 

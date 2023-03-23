@@ -9,10 +9,6 @@ COPY . .
 # Build and publish
 RUN dotnet publish -c Release -o out
 
-# Create https cert
-# RUN dotnet dev-certs https
-
-
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /API
