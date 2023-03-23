@@ -1,0 +1,16 @@
+.edit-fields {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-dialog-content img {
+  object-fit: cover;
+  width: 400px;
+  height: 400px;
+}
+
+.response-message {
+  margin-top: 25px;
+  text-align: center;
+}

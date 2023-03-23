@@ -1,5 +1,5 @@
 export interface City {
-  id: number,
-  name: string,
-  imageUrl: string
-};
+  id: number;
+  name: string;
+  photo: string;
+}

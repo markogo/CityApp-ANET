@@ -15,21 +15,31 @@ namespace CityApp_ANET.Services.CityService
             this._context = context;
         }
 
-        public async Task<List<CityDTO>> GetCities(int pageNumber, int pageSize)
+        public async Task<GetCitiesDTO> GetCities(int pageNumber, int pageSize)
         {
+            IQueryable<City> query = _context.Cities;
+
             if (pageNumber != 0 && pageSize != 0)
             {
-                return await _context.Cities
+                return new GetCitiesDTO
+                {
+                    Cities = await query
                     .OrderBy(c => c.Id)
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize)
                     .Select(c => ICityService.DomainToDTO(c))
-                    .ToListAsync();
+                    .ToListAsync(),
+                    TotalItems = query.Count()
+                };
             }
-            return await _context.Cities.Select(c => ICityService.DomainToDTO(c)).ToListAsync();
+            return new GetCitiesDTO
+            {
+                Cities = await query.Select(c => ICityService.DomainToDTO(c)).ToListAsync(),
+                TotalItems = query.Count()
+            };
         }
 
-        public async Task<List<CityDTO>> SearchCities(string name)
+        public async Task<GetCitiesDTO> SearchCities(string? name, int pageNumber, int pageSize)
         {
             IQueryable<City> query = _context.Cities;
 
@@ -38,7 +48,25 @@ namespace CityApp_ANET.Services.CityService
                 query = query.Where(c => c.Name.ToLower().Contains(name.Trim().ToLower()));
             }
 
-            return await query.Select(c => ICityService.DomainToDTO(c)).ToListAsync();
+            if (pageNumber != 0 && pageSize != 0)
+            {
+                return new GetCitiesDTO
+                {
+                    Cities = await query
+                    .OrderBy(c => c.Id)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .Select(c => ICityService.DomainToDTO(c))
+                    .ToListAsync(),
+                    TotalItems = query.Count()
+                };
+            }
+
+            return new GetCitiesDTO
+            {
+                Cities = await query.Select(c => ICityService.DomainToDTO(c)).ToListAsync(),
+                TotalItems = query.Count()
+            };
         }
 
         public async Task<CityDTO?> GetCity(int id)

@@ -6,16 +6,15 @@ import { AuthService } from '../services/auth.service';
 import { Authentication } from '../types/authentication';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css'],
 })
-export class LoginComponent {
-  loginForm = this.formBuilder.group({
+export class RegisterComponent {
+  registerForm = this.formBuilder.group({
     username: ['', Validators.required],
     password: ['', Validators.required],
   });
-
   errorMessage: number | null = null;
 
   constructor(
@@ -25,11 +24,11 @@ export class LoginComponent {
   ) {}
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      const formValues = this.loginForm.value;
+    if (this.registerForm.valid) {
+      const formValues = this.registerForm.value;
 
       this.authService
-        .login(formValues.username!, formValues.password!)
+        .register(formValues.username!, formValues.password!)
         .subscribe({
           next: (response: Authentication) => {
             this.authService.setAuthentication(response);

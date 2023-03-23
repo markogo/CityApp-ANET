@@ -6,9 +6,9 @@ namespace CityApp_ANET.Services.CityService
 {
     public interface ICityService
     {
-        Task<List<CityDTO>> GetCities(int pageNumber, int pageSize);
+        Task<GetCitiesDTO> GetCities(int pageNumber, int pageSize);
 
-        Task<List<CityDTO>> SearchCities(string name);
+        Task<GetCitiesDTO> SearchCities(string name, int pageNumber, int pageSize);
 
         Task<CityDTO?> GetCity(int id);
 

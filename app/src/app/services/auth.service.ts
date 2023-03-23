@@ -1,32 +1,62 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from '../types/user';
+import { Authentication } from '../types/authentication';
+import { LoggerService } from './logger.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  constructor(private logger: LoggerService, private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {}
-
-  register(username: string, password: string): Observable<string> {
-    return this.http.post<string>(`${environment.apiUrl}/Users/register`, {
-      username,
-      password
+  userProfile: BehaviorSubject<Authentication> =
+    new BehaviorSubject<Authentication>({
+      username: (
+        JSON.parse(localStorage.getItem('cityAppAuth')!) as Authentication
+      )?.username,
+      jwt: (JSON.parse(localStorage.getItem('cityAppAuth')!) as Authentication)
+        ?.jwt,
+      role: (JSON.parse(localStorage.getItem('cityAppAuth')!) as Authentication)
+        ?.role,
     });
+
+  register(username: string, password: string): Observable<Authentication> {
+    return this.http
+      .post<Authentication>(`${environment.apiUrl}/Users/register`, {
+        username,
+        password,
+      })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.logger.error(error.error);
+          return throwError(() => error);
+        })
+      );
   }
 
-  login(username: string, password: string): Observable<string> {
-    return this.http.post<string>(`${environment.apiUrl}/Users/login`, {
-      username,
-      password
-    });
+  login(username: string, password: string): Observable<Authentication> {
+    return this.http
+      .post<Authentication>(`${environment.apiUrl}/Users/login`, {
+        username,
+        password,
+      })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.logger.error(error.error);
+          return throwError(() => error);
+        })
+      );
   }
 
-  // TODO: Decied if this is necessary - seemed more appropriate to return user info (including roles) from a separate endpoint instead of decoding the token in the frontend
-  getUserInfo(): Observable<User> {
-    return this.http.get<User>(`${environment.apiUrl}/Users/whoami`);
+  logout() {
+    this.userProfile.next({ username: '', jwt: '', role: '' });
+    localStorage.removeItem('cityAppAuth');
+  }
+
+  setAuthentication(user: Authentication) {
+    this.userProfile.next(user);
+    localStorage.setItem('cityAppAuth', JSON.stringify(user));
   }
 }
