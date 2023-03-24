@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from './services/auth.service';
 import { Authentication } from './types/authentication';
 
@@ -9,10 +10,21 @@ import { Authentication } from './types/authentication';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'CityApp';
+  title = 'CITY APP';
   userInfo?: Authentication;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      'proekspert_logo',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/Proekspert_TurquoiseLogo.svg'
+      )
+    );
+  }
 
   ngOnInit() {
     this.authService.userProfile.subscribe((data) => {
@@ -22,6 +34,9 @@ export class AppComponent {
 
   logout = () => {
     this.authService.logout();
-    this.router.navigate(['/login']);
+  };
+
+  onLogoClick = () => {
+    window.location.href = 'https://proekspert.com';
   };
 }

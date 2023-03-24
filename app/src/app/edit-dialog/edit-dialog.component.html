@@ -10,31 +10,48 @@
     />
   </div>
 
-  <div *ngIf="responseMessage !== '' && !edit" class="response-message">
-    <span>{{ responseMessage }}</span>
-  </div>
+  <h2 class="response-message">{{ responseMessage }}</h2>
 
-  <div *ngIf="edit">
+  <div>
     <form [formGroup]="editForm" (ngSubmit)="editCity()">
       <div class="edit-fields">
         <mat-form-field class="form-field" appearance="outline">
-          <input type="text" matInput formControlName="name" />
+          <input
+            type="text"
+            matInput
+            (focus)="resetResponseMessage()"
+            (focusout)="resetResponseMessage()"
+            formControlName="name"
+          />
         </mat-form-field>
         <mat-form-field class="form-field" appearance="outline">
-          <input type="text" matInput formControlName="photo" />
+          <input
+            type="text"
+            matInput
+            (focus)="resetResponseMessage()"
+            (focusout)="resetResponseMessage()"
+            formControlName="photo"
+          />
         </mat-form-field>
       </div>
+      <mat-dialog-actions style="display: flex; justify-content: space-evenly">
+        <button
+          mat-raised-button
+          class="close-button"
+          type="button"
+          (click)="close()"
+        >
+          Close
+        </button>
+        <button
+          mat-raised-button
+          class="save-button"
+          type="submit"
+          (click)="editCity()"
+        >
+          Save
+        </button>
+      </mat-dialog-actions>
     </form>
   </div>
 </mat-dialog-content>
-
-<mat-dialog-actions style="display: flex; justify-content: space-evenly">
-  <button mat-raised-button color="accent" (click)="close()">Close</button>
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="edit ? editCity() : toggleEdit()"
-  >
-    {{ edit ? "Save" : "Edit" }}
-  </button>
-</mat-dialog-actions>

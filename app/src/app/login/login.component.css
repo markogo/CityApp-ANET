@@ -2,15 +2,14 @@
   margin-top: 14px;
 }
 
-.login-container {
-  max-width: 500px;
-  min-width: 250px;
-}
-
 .full-width {
   width: 100%;
 }
 
 .error-message {
   color: red;
+}
+
+.login-button {
+  background-color: #32c2d2;
 }

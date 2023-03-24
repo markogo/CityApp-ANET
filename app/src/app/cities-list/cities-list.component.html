@@ -1,7 +1,7 @@
 <app-wrapper>
   <div class="search-container">
-    <form [formGroup]="searchForm" (ngSubmit)="searchCities()">
-      <mat-form-field class="form-field" appearance="outline">
+    <form [formGroup]="searchForm" (ngSubmit)="onSearchClick()">
+      <mat-form-field class="form-field search-input" appearance="outline">
         <input
           placeholder="Search for a city"
           type="text"
@@ -10,15 +10,23 @@
         />
       </mat-form-field>
       <div class="button-container">
-        <button type="submit" mat-raised-button color="primary">Search</button>
-        <button (click)="resetSearch()" mat-raised-button color="accent">
+        <button
+          class="reset-button"
+          type="reset"
+          (click)="resetSearch()"
+          mat-raised-button
+        >
           Reset
+        </button>
+        <button class="search-button" type="submit" mat-raised-button>
+          Search
         </button>
       </div>
     </form>
   </div>
 
   <mat-paginator
+    *ngIf="cityData?.cities?.length != 0"
     [length]="cityData?.totalItems"
     [pageSize]="pageSize"
     [pageSizeOptions]="pageSizeOptions"
@@ -39,19 +47,30 @@
       </div>
       <mat-card-content>
         <mat-card-header style="justify-content: center">
-          <mat-card-title>{{ city.name }}</mat-card-title>
+          <mat-card-title>
+            <button
+              *ngIf="canEditCity; else cityName"
+              mat-button
+              (click)="editCity(city)"
+            >
+              <h2 style="margin-bottom: 0">{{ city.name }}</h2>
+              <mat-icon>mode_edit</mat-icon>
+            </button>
+            <ng-template #cityName>
+              <h2>{{ city.name }}</h2>
+            </ng-template>
+          </mat-card-title>
         </mat-card-header>
       </mat-card-content>
-      <mat-card-actions *ngIf="canEditCity" style="justify-content: end">
-        <button mat-button (click)="editCity(city)">
-          <mat-icon>mode_edit</mat-icon>
-          EDIT
-        </button>
-      </mat-card-actions>
     </mat-card>
   </div>
 
+  <h2 style="text-align: center" *ngIf="cityData?.cities?.length == 0">
+    NO CITIES FOUND
+  </h2>
+
   <mat-paginator
+    *ngIf="cityData?.cities?.length != 0"
     [length]="cityData?.totalItems"
     [pageSize]="pageSize"
     [pageSizeOptions]="pageSizeOptions"

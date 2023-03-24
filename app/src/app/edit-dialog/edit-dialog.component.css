@@ -14,3 +14,13 @@ mat-dialog-content img {
   margin-top: 25px;
   text-align: center;
 }
+
+.close-button {
+  width: 150px !important;
+  background-color: #ff7d0d;
+}
+
+.save-button {
+  width: 150px !important;
+  background-color: #32c2d2;
+}

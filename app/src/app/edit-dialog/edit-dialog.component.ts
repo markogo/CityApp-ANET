@@ -2,6 +2,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthService } from '../services/auth.service';
 import { CityService } from '../services/city.service';
 import { City } from '../types/city';
 
@@ -11,7 +12,6 @@ import { City } from '../types/city';
   styleUrls: ['./edit-dialog.component.css'],
 })
 export class EditDialogComponent {
-  edit = false;
   responseMessage = '';
 
   editForm = this.formBuilder.group({
@@ -23,15 +23,16 @@ export class EditDialogComponent {
     private dialogRef: MatDialogRef<EditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public city: City,
     private formBuilder: FormBuilder,
-    private cityService: CityService
+    private cityService: CityService,
+    private authService: AuthService
   ) {}
 
   close() {
     this.dialogRef.close();
   }
 
-  toggleEdit() {
-    this.edit = !this.edit;
+  resetResponseMessage() {
+    this.responseMessage = '';
   }
 
   editCity() {
@@ -49,13 +50,14 @@ export class EditDialogComponent {
           this.responseMessage = 'EDIT SUCCESSFUL';
           this.city.name = editedCity.name;
           this.city.photo = editedCity.photo;
-          this.toggleEdit();
         }
       },
       error: (error: HttpErrorResponse) => {
-        this.responseMessage = 'EDIT UNSUCCESSFUL';
-        this.responseMessage = error.error;
-        this.toggleEdit();
+        if (error.status === 401) {
+          this.authService.logout();
+        } else {
+          this.responseMessage = 'EDIT UNSUCCESSFUL';
+        }
       },
     });
   }

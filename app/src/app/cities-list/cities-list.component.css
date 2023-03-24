@@ -5,19 +5,24 @@ mat-card img {
 }
 
 .search-container {
-  display: flex;
-  justify-content: center;
   margin-bottom: 25px;
 }
 
 .button-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .card {
   max-width: 400px;
-  margin-top: 20px;
+  margin-top: 30px;
+  justify-content: center;
+  display: flex;
+}
+
+.card:first-child {
+  max-width: 400px;
+  margin-top: 0;
   justify-content: center;
   display: flex;
 }
@@ -27,4 +32,22 @@ mat-card img {
   align-items: center;
   flex-direction: column;
   margin: 25px 0;
+}
+
+.search-button {
+  width: 150px !important;
+  background-color: #32c2d2;
+}
+
+.reset-button {
+  width: 150px !important;
+  background-color: #ff7d0d;
+}
+
+.search-input {
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-paginator-container {
+  justify-content: center !important;
 }
