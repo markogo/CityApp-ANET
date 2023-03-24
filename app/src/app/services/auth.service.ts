@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Authentication } from '../types/authentication';
@@ -9,7 +10,11 @@ import { LoggerService } from './logger.service';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private logger: LoggerService, private http: HttpClient) {}
+  constructor(
+    private logger: LoggerService,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   userProfile: BehaviorSubject<Authentication> =
     new BehaviorSubject<Authentication>({
@@ -53,6 +58,7 @@ export class AuthService {
   logout() {
     this.userProfile.next({ username: '', jwt: '', role: '' });
     localStorage.removeItem('cityAppAuth');
+    this.router.navigate(['/login']);
   }
 
   setAuthentication(user: Authentication) {

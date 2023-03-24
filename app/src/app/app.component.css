@@ -5,3 +5,27 @@
 .auth-container {
   display: flex;
 }
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  height: 55px;
+  background-color: #efeeee;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.header {
+  background-color: #efeeee;
+  position: fixed;
+  z-index: 10;
+  height: 55px;
+}
+
+.logo {
+  width: 200px;
+  cursor: pointer;
+}

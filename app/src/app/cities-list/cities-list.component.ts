@@ -16,9 +16,6 @@ import { Role } from '../types/user';
   styleUrls: ['./cities-list.component.css'],
 })
 export class CitiesListComponent {
-  //TODO: SHOW ERRORMESSAGE IN TEMPLATE
-  errorMessage = null;
-
   searchForm = this.formBuilder.group({
     name: [''],
   });
@@ -50,8 +47,10 @@ export class CitiesListComponent {
           this.cityData = response;
         }
       },
-      error: (err: HttpErrorResponse) => {
-        this.errorMessage = err.error;
+      error: (error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.authService.logout();
+        }
       },
     });
   }
@@ -65,13 +64,17 @@ export class CitiesListComponent {
     this.getCities(this.pageNumber, this.pageSize);
   }
 
-  searchCities() {
+  onSearchClick() {
+    this.searchCities(this.pageNumber, this.pageSize);
+  }
+
+  searchCities(pageNumber: number, pageSize: number) {
     const formValues = this.searchForm.value;
-    if (formValues.name == '') {
-      this.getCities(this.pageNumber, this.pageSize);
+    if (formValues.name === null || formValues.name === '') {
+      this.getCities(pageNumber, pageSize);
     } else {
       this.cityService
-        .searchCities(this.pageNumber, this.pageSize, formValues.name!)
+        .searchCities(pageNumber, pageSize, formValues.name!)
         .subscribe({
           next: (response: GetCitiesDTO) => {
             if (response) {
@@ -79,18 +82,22 @@ export class CitiesListComponent {
             }
           },
           error: (error: HttpErrorResponse) => {
-            this.errorMessage = error.error;
+            if (error.status === 401) {
+              this.authService.logout();
+            }
           },
         });
     }
   }
 
   onPaginateChange(event: PageEvent) {
-    let page = event.pageIndex;
-    let size = event.pageSize;
+    this.pageNumber = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
 
-    page = page + 1;
-
-    this.getCities(page, size);
+    if (this.searchForm.value.name != '') {
+      this.searchCities(this.pageNumber, this.pageSize);
+    } else {
+      this.getCities(this.pageNumber, this.pageSize);
+    }
   }
 }

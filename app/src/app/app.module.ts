@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CitiesListComponent } from './cities-list/cities-list.component';
 import { LoginComponent } from './login/login.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,13 +19,13 @@ import { WrapperComponent } from './wrapper/wrapper.component';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RegisterComponent } from './register/register.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
     AppComponent,
     CitiesListComponent,
     LoginComponent,
-    NotFoundComponent,
     WrapperComponent,
     EditDialogComponent,
     RegisterComponent,
@@ -45,6 +44,7 @@ import { RegisterComponent } from './register/register.component';
     MatPaginatorModule,
     MatIconModule,
     MatDialogModule,
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

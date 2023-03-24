@@ -1,32 +1,24 @@
-<mat-toolbar>
+<mat-toolbar class="header">
   <span>{{ title }}</span>
   <span class="spacer"></span>
   <div class="auth-container">
-    <button
-      mat-button
-      color="primary"
-      *ngIf="userInfo?.jwt"
-      [routerLink]="'/cities'"
-    >
+    <button mat-button *ngIf="userInfo?.jwt" [routerLink]="'/cities'">
       Cities
     </button>
-    <button
-      mat-button
-      color="accent"
-      *ngIf="!userInfo?.jwt"
-      [routerLink]="'/login'"
-    >
+    <button mat-button *ngIf="!userInfo?.jwt" [routerLink]="'/login'">
       Login
     </button>
     <button mat-button *ngIf="userInfo?.jwt" (click)="logout()">Logout</button>
-    <button
-      mat-button
-      *ngIf="!userInfo?.jwt"
-      color="warn"
-      [routerLink]="'/register'"
-    >
+    <button mat-button *ngIf="!userInfo?.jwt" [routerLink]="'/register'">
       Register
     </button>
   </div>
 </mat-toolbar>
 <router-outlet></router-outlet>
+<div class="footer">
+  <mat-icon
+    class="logo"
+    (click)="onLogoClick()"
+    svgIcon="proekspert_logo"
+  ></mat-icon>
+</div>
