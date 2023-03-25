@@ -3,8 +3,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-wrapper',
   templateUrl: './wrapper.component.html',
-  styleUrls: ['./wrapper.component.css']
+  styleUrls: ['./wrapper.component.css'],
 })
-export class WrapperComponent {
-
-}
+export class WrapperComponent {}

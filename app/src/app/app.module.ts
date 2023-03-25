@@ -20,6 +20,7 @@ import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RegisterComponent } from './register/register.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     WrapperComponent,
     EditDialogComponent,
     RegisterComponent,
+    WrapperComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +47,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatIconModule,
     MatDialogModule,
     MatGridListModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

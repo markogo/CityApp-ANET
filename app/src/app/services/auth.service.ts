@@ -35,7 +35,7 @@ export class AuthService {
       })
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          this.logger.error(error.error);
+          this.logger.error(error.message);
           return throwError(() => error);
         })
       );
@@ -49,7 +49,7 @@ export class AuthService {
       })
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          this.logger.error(error.error);
+          this.logger.error(error.message);
           return throwError(() => error);
         })
       );

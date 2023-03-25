@@ -8,7 +8,7 @@ mat-card img {
   margin-bottom: 25px;
 }
 
-.button-container {
+.search-buttons-container {
   display: flex;
   justify-content: space-evenly;
 }
@@ -44,10 +44,10 @@ mat-card img {
   background-color: #ff7d0d;
 }
 
-.search-input {
-  width: 100%;
-}
-
 ::ng-deep .mat-mdc-paginator-container {
   justify-content: center !important;
+}
+
+.icon-button-title {
+  margin-bottom: 0;
 }
