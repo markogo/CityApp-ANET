@@ -1,7 +1,7 @@
 <app-wrapper>
   <div class="search-container">
     <form [formGroup]="searchForm" (ngSubmit)="onSearchClick()">
-      <mat-form-field class="form-field search-input" appearance="outline">
+      <mat-form-field class="form-field full-width" appearance="outline">
         <input
           placeholder="Search for a city"
           type="text"
@@ -9,7 +9,7 @@
           formControlName="name"
         />
       </mat-form-field>
-      <div class="button-container">
+      <div class="search-buttons-container">
         <button
           class="reset-button"
           type="reset"
@@ -26,6 +26,7 @@
   </div>
 
   <mat-paginator
+    #paginator1
     *ngIf="cityData?.cities?.length != 0"
     [length]="cityData?.totalItems"
     [pageSize]="pageSize"
@@ -37,7 +38,7 @@
 
   <div class="cards">
     <mat-card class="card" *ngFor="let city of cityData?.cities">
-      <div style="display: flex; justify-content: center">
+      <div class="flex-justify-center">
         <img
           mat-card-image
           [src]="city.photo"
@@ -45,15 +46,16 @@
           onerror="this.src='assets/images/not-found-image.jpeg'"
         />
       </div>
+      <mat-divider></mat-divider>
       <mat-card-content>
-        <mat-card-header style="justify-content: center">
+        <mat-card-header class="flex-justify-center">
           <mat-card-title>
             <button
               *ngIf="canEditCity; else cityName"
               mat-button
               (click)="editCity(city)"
             >
-              <h2 style="margin-bottom: 0">{{ city.name }}</h2>
+              <h2 class="icon-button-title">{{ city.name }}</h2>
               <mat-icon>mode_edit</mat-icon>
             </button>
             <ng-template #cityName>
@@ -65,11 +67,12 @@
     </mat-card>
   </div>
 
-  <h2 style="text-align: center" *ngIf="cityData?.cities?.length == 0">
+  <h2 class="text-center" *ngIf="cityData?.cities?.length == 0">
     NO CITIES FOUND
   </h2>
 
   <mat-paginator
+    #paginator2
     *ngIf="cityData?.cities?.length != 0"
     [length]="cityData?.totalItems"
     [pageSize]="pageSize"

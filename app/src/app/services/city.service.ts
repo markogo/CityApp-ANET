@@ -8,7 +8,7 @@ import {
 import { LoggerService } from './logger.service';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { GetCitiesDTO } from '../types/getCities';
+import { Cities } from '../types/cities';
 import { City } from '../types/city';
 import { AuthService } from './auth.service';
 
@@ -22,7 +22,7 @@ export class CityService {
     private authService: AuthService
   ) {}
 
-  getAllCities(pageNumber: number, pageSize: number): Observable<GetCitiesDTO> {
+  getAllCities(pageNumber: number, pageSize: number): Observable<Cities> {
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${this.authService.userProfile.value.jwt}`)
       .set('Content-Type', 'application/json');
@@ -33,13 +33,13 @@ export class CityService {
     };
 
     return this.http
-      .get<GetCitiesDTO>(`${environment.apiUrl}/Cities`, {
+      .get<Cities>(`${environment.apiUrl}/Cities`, {
         headers: headers,
         params: params,
       })
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          this.logger.error(error.error);
+          this.logger.error(error.message);
           return throwError(() => error);
         })
       );
@@ -49,7 +49,7 @@ export class CityService {
     pageNumber: number,
     pageSize: number,
     name: string
-  ): Observable<GetCitiesDTO> {
+  ): Observable<Cities> {
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${this.authService.userProfile.value.jwt}`)
       .set('Content-Type', 'application/json');
@@ -61,13 +61,13 @@ export class CityService {
     };
 
     return this.http
-      .get<GetCitiesDTO>(`${environment.apiUrl}/Cities/search`, {
+      .get<Cities>(`${environment.apiUrl}/Cities/search`, {
         headers: headers,
         params: params,
       })
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          this.logger.error(error.error);
+          this.logger.error(error.message);
           return throwError(() => error);
         })
       );
@@ -84,7 +84,7 @@ export class CityService {
       })
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          this.logger.error(error.error);
+          this.logger.error(error.message);
           return throwError(() => error);
         })
       );

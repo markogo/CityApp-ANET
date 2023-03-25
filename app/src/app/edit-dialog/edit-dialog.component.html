@@ -1,7 +1,7 @@
-<h2 mat-dialog-title style="text-align: center">{{ city.name }}</h2>
+<h2 mat-dialog-title class="text-center">{{ city.name }}</h2>
 
 <mat-dialog-content>
-  <div style="display: flex; justify-content: center">
+  <div class="flex-justify-center">
     <img
       mat-card-image
       [src]="city.photo"
@@ -34,7 +34,7 @@
           />
         </mat-form-field>
       </div>
-      <mat-dialog-actions style="display: flex; justify-content: space-evenly">
+      <mat-dialog-actions class="flex-justify-space-evenly">
         <button
           mat-raised-button
           class="close-button"

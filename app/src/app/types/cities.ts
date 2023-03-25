@@ -1,6 +1,6 @@
 import { City } from './city';
 
-export interface GetCitiesDTO {
+export interface Cities {
   cities: City[];
   totalItems: number;
 }
