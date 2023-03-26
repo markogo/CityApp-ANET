@@ -1,6 +1,6 @@
 # App
 
-A simple FE application for showing different cities and their pictues.
+A simple FE application for showing and editing different cities and their pictues.
 
 ## Prerequisites
 
