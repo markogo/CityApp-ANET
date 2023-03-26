@@ -15,7 +15,7 @@ export class RegisterComponent {
     username: ['', Validators.required],
     password: ['', Validators.required],
   });
-  errorMessage: number | null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private formBuilder: FormBuilder,

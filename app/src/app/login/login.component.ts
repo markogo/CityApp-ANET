@@ -16,7 +16,7 @@ export class LoginComponent {
     password: ['', Validators.required],
   });
 
-  errorMessage: number | null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private formBuilder: FormBuilder,

@@ -23,10 +23,6 @@ export class CityService {
   ) {}
 
   getAllCities(pageNumber: number, pageSize: number): Observable<Cities> {
-    const headers = new HttpHeaders()
-      .set('Authorization', `Bearer ${this.authService.userProfile.value.jwt}`)
-      .set('Content-Type', 'application/json');
-
     const params = {
       pageNumber: pageNumber,
       pageSize: pageSize,
@@ -34,7 +30,6 @@ export class CityService {
 
     return this.http
       .get<Cities>(`${environment.apiUrl}/Cities`, {
-        headers: headers,
         params: params,
       })
       .pipe(
@@ -50,10 +45,6 @@ export class CityService {
     pageSize: number,
     name: string
   ): Observable<Cities> {
-    const headers = new HttpHeaders()
-      .set('Authorization', `Bearer ${this.authService.userProfile.value.jwt}`)
-      .set('Content-Type', 'application/json');
-
     const params = {
       name: name,
       pageNumber: pageNumber,
@@ -62,7 +53,6 @@ export class CityService {
 
     return this.http
       .get<Cities>(`${environment.apiUrl}/Cities/search`, {
-        headers: headers,
         params: params,
       })
       .pipe(
@@ -74,14 +64,8 @@ export class CityService {
   }
 
   editCity(city: City) {
-    const headers = new HttpHeaders()
-      .set('Authorization', `Bearer ${this.authService.userProfile.value.jwt}`)
-      .set('Content-Type', 'application/json');
-
     return this.http
-      .put<HttpResponse<any>>(`${environment.apiUrl}/Cities/${city.id}`, city, {
-        headers: headers,
-      })
+      .put<HttpResponse<any>>(`${environment.apiUrl}/Cities/${city.id}`, city)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           this.logger.error(error.message);
