@@ -1,0 +1,50 @@
+services:
+
+  database:
+    image: postgres:15.2-alpine
+    container_name: database
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: cityapp
+      POSTGRES_PASSWORD: cityapp
+      POSTGRES_DB: citybase
+    networks:
+      - back-tier
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U cityapp -d citybase" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./API
+      dockerfile: Dockerfile
+    container_name: backend
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - 5083:5083
+    environment:
+      - ConnectionString=Server=database;Port=5432;Database=citybase;User Id=cityapp;Password=cityapp;
+    networks:
+      - back-tier
+      - front-tier
+
+  frontend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: frontend
+    depends_on:
+      - backend
+    ports:
+      - 8080:80
+    networks:
+      - front-tier
+
+networks:
+  back-tier:
+  front-tier:
