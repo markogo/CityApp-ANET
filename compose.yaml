@@ -31,14 +31,11 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
-    container_name: frontent
+    container_name: frontend
     depends_on:
       - backend
     ports:
       - 8080:80
-    environment:
-      NODE_ENV: local
-      apiUrl: http://localhost:5083/api
     networks:
       - front-tier
 
