@@ -1,6 +1,6 @@
 # CityApp-ANET
 
-A simple web application that displays a list of cities
+A simple web application that displays a list of editable cities
 
 ## Prerequisites
 
@@ -8,8 +8,8 @@ A simple web application that displays a list of cities
 * [Docker Compose](https://docs.docker.com/compose/)
 
 1. Database will run on localhost:5432. 
-2. Frontend will run on http://localhost:8080.
-3. Backend  will run on http://localhost:5083/api.
+2. Backend  will run on http://localhost:5083/api.
+3. Frontend will run on http://localhost:8080.
 
 ## Tech stack
 
@@ -38,7 +38,7 @@ When the application starts, a list of users are created that are available for 
 
 ## Teamwork notes
 
-* Team setup: Marko (BE, FE), Kristjan (FE), Merily (DevOps, Design),
+* Team setup: Marko (BE, FE), Kristjan (FE), Merily (DevOps, Design)
 * Worked hours: 83h
   
 * Benefits of working in a team:
