@@ -4,7 +4,7 @@ export interface User {
 }
 
 export enum Role {
-  DEFAULT = 'ROLE_DEFAULT',
+  DEFAULT = 'ROLE_USER',
   EDITOR = 'ROLE_ALLOW_EDIT',
   ADMIN = 'ROLE_ADMIN',
 }
